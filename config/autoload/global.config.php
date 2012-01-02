@@ -37,10 +37,10 @@ $settings = array(
     'connection' => array(
         'driver'   => 'pdo_mysql',
         'host'     => 'localhost',
-        'port'     => '8889', 
-        'user'     => 'root',
-        'password' => 'root',
-        'dbname'   => 'zf2tutorial-doc',
+        'port'     => '', 
+        'user'     => '',
+        'password' => '',
+        'dbname'   => '',
     ),
     'driver' => array(
         'class'     => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
