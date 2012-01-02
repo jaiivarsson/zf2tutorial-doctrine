@@ -1,0 +1,90 @@
+<?php
+/**
+ * Local Configuration Override
+ *
+ * This configuration override file is for overriding environment-specific and
+ * security-sensitive configuration information. Copy this file without the
+ * .dist extension at the end and populate values as needed.
+ *
+ * @NOTE: This file is ignored from Git by default with the .gitignore included
+ * in ZendSkeletonApplication. This is a good practice, as it prevents sensitive
+ * credentials from accidentally being comitted into version control.
+ */
+$settings = array(
+    // enables production mode by disabling generation of proxies
+   'production' => false,
+   
+    // sets the cache to use for metadata: one of 'array', 'apc', or 'memcache'
+    'cache' => 'array',
+   
+    // only used if cache is set to memcache
+    'memcache' => array( 
+        'host' => false,
+        'port' => false
+    ),
+   
+    'connection' => array(
+        'driver'   => 'pdo_mysql',
+        'host'     => 'localhost',
+        'port'     => '8889', 
+        'user'     => 'root',
+        'password' => 'root',
+        'dbname'   => 'zf2tutorial-doc',
+    ),
+    'driver' => array(
+        'class'     => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+        'namespace' => 'Application\Entity',
+        'paths'     => array('module/Application/src/Application/Entity')
+    ),
+    'namespace_aliases' => array(
+    ),
+);
+/**
+ * YOU DO NOT NEED TO EDIT BELOW THIS LINE.
+ */
+$cache = array('array', 'memcache', 'apc');
+if (!in_array($settings['cache'], $cache)) {
+    throw new InvalidArgumentException(sprintf(
+        'cache must be one of: %s',
+        implode(', ', $cache)
+    ));
+}
+$settings['cache'] = 'doctrine_cache_' . $settings['cache'];
+
+//return array();
+return array(
+    'di' => array(
+        'instance' => array(
+            'doctrine_memcache' => array(
+                'parameters' => $settings['memcache']
+            ),
+            'orm_config' => array(
+                'parameters' => array(
+                    'opts' => array(
+                        'entity_namespaces' => $settings['namespace_aliases'],
+                        'auto_generate_proxies' => !$settings['production']
+                    ),
+                    'metadataCache' => $settings['cache'],
+                    'queryCache'    => $settings['cache'],
+                    'resultCache'   => $settings['cache'],
+                )
+            ),
+            'orm_connection' => array(
+                'parameters' => array(
+                    'params' => $settings['connection']
+                ),
+            ),
+            'orm_driver_chain' => array(
+                'parameters' => array(
+                    'drivers' => array(
+                        'application_annotation_driver' => $settings['driver']
+                    ),
+                    'cache' => $settings['cache']
+                )
+            ),
+        ),
+    ),
+);
+//return array(
+//    // ...
+//);
