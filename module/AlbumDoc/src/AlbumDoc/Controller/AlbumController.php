@@ -97,7 +97,7 @@ class AlbumController extends ActionController {
 
             // Redirect to list of albums
             return $this->redirect()->toRoute('default', array(
-                'controller' => 'album',
+                'controller' => 'albumdoc',
                 'action'     => 'index',
             ));
         }
