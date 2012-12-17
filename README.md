@@ -10,3 +10,5 @@ To get this up and running
 - In the vendor folder you will need to put a copy of both [SpiffyDoctrine](https://github.com/SpiffyJr/SpiffyDoctrine) and [SpiffyDoctrineORM](https://github.com/SpiffyJr/SpiffyDoctrineORM)
 - Setup database as per [Rob Allen's ZF2 tutorial](http://akrabat.com/getting-started-with-zend-framework-2/)
 - Edit the config/autoload/global.config.php file and add your own database connection details
+
+
